@@ -2,6 +2,7 @@ function ret = apply_sm(csi, sm)
 
 error(nargchk(2,2,nargin));
 
+%% Shortcut for 1 TX antenna
 [M, ~, S] = size(csi);
 if M == 1
     ret = csi;

@@ -7,7 +7,7 @@
 %   Modified by Renjie Zhang, Bingxian Lu.
 %   Email: bingxian.lu@gmail.com
 
-function read_bf_socket()
+function read_bf_socket(gui_handles)
 
 while 1
 %% Build a TCP Server and wait for connection
@@ -17,6 +17,7 @@ while 1
     t.InputBufferSize = 1024;
     t.Timeout = 15;
     fprintf('Waiting for connection on port %d\n',port);
+    set(gui_handles.text8,'string','Waiting for connection on port 8090\n');
     fopen(t);
     fprintf('Accept connection from %s\n',t.RemoteHost);
 
@@ -30,9 +31,9 @@ while 1
 %%  https://mathworks.com/help/matlab/graphics_transition/how-do-i-replace-the-erasemode-property.html
     [VER DATESTR] = version();
     if datenum(DATESTR) > datenum('February 11, 2014')
-        p = plot(t1,m1,'MarkerSize',5);
+        p = plot(gui_handles.axes1,t1,m1,'MarkerSize',5);
     else
-        p = plot(t1,m1,'EraseMode','Xor','MarkerSize',5);
+        p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
     end
 
     xlabel('Subcarrier index');

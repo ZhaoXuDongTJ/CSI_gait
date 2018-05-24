@@ -22,7 +22,7 @@ function varargout = GUI_start(varargin)
 
 % Edit the above text to modify the response to help GUI_start
 
-% Last Modified by GUIDE v2.5 25-May-2018 01:14:32
+% Last Modified by GUIDE v2.5 25-May-2018 01:37:49
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -176,3 +176,35 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on mouse press over axes background.
+function axes2_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to axes2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+%  开启摄像头
+global vid vid_res n_bands;
+if vid == -1 %摄像头尚未开启
+    [vid, vid_res, n_bands] = open_camera();
+end
+axes(handles.axes2);
+hImage=image(zeros(vid_res(2),vid_res(1),n_bands));
+preview(vid, hImage);   %打开预览画面
+
+
+% --- Executes during object creation, after setting all properties.
+function axes2_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate axes2
+%  开启摄像头
+global vid vid_res n_bands;
+if vid == -1 %摄像头尚未开启
+    [vid, vid_res, n_bands] = open_camera();
+end
+axes(handles.axes2);
+hImage=image(zeros(vid_res(2),vid_res(1),n_bands));
+preview(vid, hImage);   %打开预览画面

@@ -1,0 +1,1 @@
+[status,result]=dos('ipconfig')  result 输出一个文本

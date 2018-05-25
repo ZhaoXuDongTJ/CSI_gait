@@ -1,4 +1,4 @@
-function [t] = read_bf_socket(gui_handles)
+function [t] = read_bf_socket()
 
 while 1
 %% Build a TCP Server and wait for connection
@@ -8,7 +8,6 @@ while 1
     t.InputBufferSize = 1024;
     t.Timeout = 15;
     fprintf('Waiting for connection on port %d\n',port);
-    set(gui_handles.text8,'string','Waiting for connection on port 8090\n');
     fopen(t);
     fprintf('Accept connection from %s\n',t.RemoteHost);
 
@@ -22,10 +21,10 @@ while 1
     [~, DATESTR] = version();
     if datenum(DATESTR) > datenum('February 11, 2014')
        % p = plot(gui_handles.axes1,t1,m1,'MarkerSize',5);
-       p = plot(gui_handles.axes1,t1,m1);
+       p = plot(t1,m1);
     else
         %p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
-        p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
+        p = plot(m1,'EraseMode','Xor','MarkerSize',5);
     end
 
     xlabel('Subcarrier index');

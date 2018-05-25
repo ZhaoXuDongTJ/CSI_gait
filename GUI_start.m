@@ -1,30 +1,5 @@
 function varargout = GUI_start(varargin)
-%GUI_START MATLAB code file for GUI_start.fig
-%      GUI_START, by itself, creates a new GUI_START or raises the existing
-%      singleton*.
-%
-%      H = GUI_START returns the handle to a new GUI_START or the handle to
-%      the existing singleton*.
-%
-%      GUI_START('Property','Value',...) creates a new GUI_START using the
-%      given property value pairs. Unrecognized properties are passed via
-%      varargin to GUI_start_OpeningFcn.  This calling syntax produces a
-%      warning when there is an existing singleton*.
-%
-%      GUI_START('CALLBACK') and GUI_START('CALLBACK',hObject,...) call the
-%      local function named CALLBACK in GUI_START.M with the given input
-%      arguments.
-%
-%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
-%      instance to run (singleton)".
-%
-% See also: GUIDE, GUIDATA, GUIHANDLES
 
-% Edit the above text to modify the response to help GUI_start
-
-% Last Modified by GUIDE v2.5 25-May-2018 01:37:49
-
-% Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -46,12 +21,6 @@ end
 
 % --- Executes just before GUI_start is made visible.
 function GUI_start_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   unrecognized PropertyName/PropertyValue pairs from the
-%            command line (see VARARGIN)
 
 % Choose default command line output for GUI_start
 handles.output = hObject;

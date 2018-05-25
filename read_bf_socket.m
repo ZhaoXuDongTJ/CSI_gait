@@ -21,9 +21,11 @@ while 1
 %%  https://mathworks.com/help/matlab/graphics_transition/how-do-i-replace-the-erasemode-property.html
     [~, DATESTR] = version();
     if datenum(DATESTR) > datenum('February 11, 2014')
-        p = plot(t1,m1,'MarkerSize',5);
+       % p = plot(gui_handles.axes1,t1,m1,'MarkerSize',5);
+       p = plot(gui_handles.axes1,t1,m1);
     else
-        p = plot(t1,m1,'EraseMode','Xor','MarkerSize',5);
+        %p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
+        p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
     end
 
     xlabel('Subcarrier index');

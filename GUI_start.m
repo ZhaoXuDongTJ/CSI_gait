@@ -205,12 +205,15 @@ function axes2_ButtonDownFcn(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function axes2_CreateFcn(hObject, eventdata, handles)
 
+
 % --- Executes during object creation, after setting all properties.
 function axes1_CreateFcn(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function figure1_CreateFcn(hObject, eventdata, handles)
 global Flag_1
 Flag_1 = 1;
+get(handles.edit2,'String');
+set(handles.edit2,'String',string(GET_IPv4()));
 
 % --- Executes during object deletion, before destroying properties.
 function figure1_DeleteFcn(hObject, eventdata, handles)

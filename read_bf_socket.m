@@ -1,13 +1,4 @@
-%READ_BF_SOCKET Reads in a file of beamforming feedback logs.
-%   This version uses the *C* version of read_bfee, compiled with
-%   MATLAB's MEX utility.
-%
-% (c) 2008-2011 Daniel Halperin <dhalperi@cs.washington.edu>
-%
-%   Modified by Renjie Zhang, Bingxian Lu.
-%   Email: bingxian.lu@gmail.com
-
-function read_bf_socket(gui_handles)
+function [t] = read_bf_socket(gui_handles)
 
 while 1
 %% Build a TCP Server and wait for connection
@@ -26,14 +17,13 @@ while 1
     axis([1,30,-10,30]);
     t1=0;
     m1=zeros(30,1);
-
 %%  Starting in R2014b, the EraseMode property has been removed from all graphics objects. 
 %%  https://mathworks.com/help/matlab/graphics_transition/how-do-i-replace-the-erasemode-property.html
-    [VER DATESTR] = version();
+    [~, DATESTR] = version();
     if datenum(DATESTR) > datenum('February 11, 2014')
-        p = plot(gui_handles.axes1,t1,m1,'MarkerSize',5);
+        p = plot(t1,m1,'MarkerSize',5);
     else
-        p = plot(gui_handles.axes1,t1,m1,'EraseMode','Xor','MarkerSize',5);
+        p = plot(t1,m1,'EraseMode','Xor','MarkerSize',5);
     end
 
     xlabel('Subcarrier index');
@@ -80,8 +70,8 @@ while 1
         if (code == 187) % (tips: 187 = hex2dec('bb')) Beamforming matrix -- output a record
             csi_entry = read_bfee(bytes);
         
-            perm = csi_entry.perm;
-            Nrx = csi_entry.Nrx;
+            perm = csi_entry.perm;  % 接收天线的信号排列到处理测量的3个RF链
+            Nrx = csi_entry.Nrx;    % 天线的数量
             
             if Nrx > 1 % No permuting needed for only 1 antenna
                 if sum(perm) ~= triangle(Nrx) % matrix does not contain default values

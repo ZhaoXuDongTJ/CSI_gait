@@ -153,7 +153,7 @@ while Flag_1
         
         csi = get_scaled_csi(csi_entry);%CSI data
 	%You can use the CSI data here.
-
+        container_csi = db(abs(squeeze(csi(1,3,:)).'));  
 	%This plot will show graphics about recent 10 csi packets
         set(p(index*3 + 1),'XData', [1:30], 'YData', db(abs(squeeze(csi(1,1,:)).')), 'color', 'b', 'linestyle', '-');
         
@@ -212,8 +212,6 @@ function axes1_CreateFcn(hObject, eventdata, handles)
 function figure1_CreateFcn(hObject, eventdata, handles)
 global Flag_1
 Flag_1 = 1;
-get(handles.edit2,'String');
-set(handles.edit2,'String',string(GET_IPv4()));
 
 % --- Executes during object deletion, before destroying properties.
 function figure1_DeleteFcn(hObject, eventdata, handles)

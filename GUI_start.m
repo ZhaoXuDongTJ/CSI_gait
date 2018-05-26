@@ -63,9 +63,10 @@ end
 
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
-global Flag_1 container_csi Flag_collect coss 
+global Flag_1 container_csi Flag_collect coss isYun num_collect
 Flag_collect = 0;
 num_collect = 100;
+isYun = 1;
 while Flag_1
 %% Build a TCP Server and wait for connection
 %% 建立TCP服务器并等待连接
@@ -182,6 +183,7 @@ while Flag_1
 %% Close file
     fclose(t);
     delete(t);
+    isYun = 0;
 end
 
 
@@ -199,54 +201,82 @@ end
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % 增加ID 
-id_yet = get(handles.listbox1, 'string');
-id_count = length(id_yet);
-id_add = num2str(id_count + 1);
-while length(id_add) < 3
-    id_add = strcat('0', id_add);
-end
-set(handles.listbox1, 'string', sort([id_yet; id_add]));
-mkdir(strcat('gait_data/', id_add));
+    id_yet = get(handles.listbox1, 'string');
+    id_count = length(id_yet);
+    id_add = num2str(id_count + 1);
+    set(handles.listbox1, 'string', sort([id_yet; id_add]));
+    mkdir(strcat('data/user', id_add));
+
+
 
 function pushbutton2_Callback(hObject, eventdata, handles)
+% 增加数据--》步态的csi数据
+    global isYun Flag_collect coss num_collect
+    if isYun
+        % 判断是否打开了tcp
+    end
+    sp=actxserver('SAPI.SpVoice');
+    sp.Speak('请开始行走');
+    As = get(handles.listbox1,'value');
+    filepath = strcat('data/user', As,'/',As,'.mat');
+    Flag_collect = 1;
+    while num_collect
+
+    end
+    save(filepath,'coss');
+    Flag_collect = 0;
+    coss = [];
 
 % --- Executes on button press in pushbutton5.
 function pushbutton5_Callback(hObject, eventdata, handles)
-% 复位按钮
-global collect_con coss
-coss = [];
-collect_con = [];
+    % 复位按钮
+    global collect_con coss
+    coss = [];
+    collect_con = [];
 
 % --- Executes on button press in pushbutton4.
 function pushbutton4_Callback(hObject, eventdata, handles)
 % 识别按钮
-global t container_csi Flag_collect coss
-n = 200;
-Flag_collect = 1;
-plot(handles.axes3,coss);
+    global Flag_collect coss num_collect
+    sp=actxserver('SAPI.SpVoice');
+    sp.Speak('请开始行走');
 
-
+    Flag_collect = 1;
+    while num_collect
+    
+    end
+    plot(handles.axes3,coss);
+    Flag_collect = 0;
+  
+% svm
+    n = get(handles.listbox1, 'string');
+    svm_trainer = svm_training(create_training_data(n));
+    score = create_testing_data(coss);
+    coss =[];
+    classify_label = svm_classifying(svm_trainer,score);
+% 显示
+    set(handles.text14,'String',classify_label);
+    
 
 % --- Executes on mouse press over axes background.
 function axes2_ButtonDownFcn(hObject, eventdata, handles)
 
-
 % --- Executes during object creation, after setting all properties.
 function axes2_CreateFcn(hObject, eventdata, handles)
-% 代码注释 --到yc机器开启
-%global vid vid_res n_bands;
-%[vid, vid_res, n_bands] = open_camera();
-%hImage = image(zeros(vid_res(2),vid_res(1),n_bands));
-%preview(vid, hImage); 
+    % 代码注释 --到yc机器开启
+    %global vid vid_res n_bands;
+    %[vid, vid_res, n_bands] = open_camera();
+    %hImage = image(zeros(vid_res(2),vid_res(1),n_bands));
+    %preview(vid, hImage); 
 
 % --- Executes during object creation, after setting all properties.
 function axes1_CreateFcn(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function figure1_CreateFcn(hObject, eventdata, handles)
-global Flag_1
-Flag_1 = 1;
+    global Flag_1
+    Flag_1 = 1;
 
 % --- Executes during object deletion, before destroying properties.
 function figure1_DeleteFcn(hObject, eventdata, handles)
-global Flag_1
-Flag_1 = 0;
+    global Flag_1
+    Flag_1 = 0;

@@ -63,7 +63,7 @@ end
 
 % --- Executes on button press in pushbutton3.
 function pushbutton3_Callback(hObject, eventdata, handles)
-global Flag_1
+global Flag_1 container_csi t
 while Flag_1
 %% Build a TCP Server and wait for connection
 %% 建立TCP服务器并等待连接
@@ -153,7 +153,8 @@ while Flag_1
         
         csi = get_scaled_csi(csi_entry);%CSI data
 	%You can use the CSI data here.
-        container_csi = db(abs(squeeze(csi(1,3,:)).'));  
+        
+        
 	%This plot will show graphics about recent 10 csi packets
         set(p(index*3 + 1),'XData', [1:30], 'YData', db(abs(squeeze(csi(1,1,:)).')), 'color', 'b', 'linestyle', '-');
         
@@ -163,6 +164,7 @@ while Flag_1
         
         if Nrx > 2
             set(p(index*3 + 3),'XData', [1:30], 'YData', db(abs(squeeze(csi(1,3,:)).')), 'color', 'r', 'linestyle', '-');
+            container_csi = db(abs(squeeze(csi(1,3,:)).'));
         end
         
         axis([1,30,-10,40]);
@@ -189,14 +191,38 @@ end
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
+% 增加ID 
+id_yet = get(handles.listbox1, 'string');
+id_count = length(id_yet);
+id_add = num2str(id_count + 1);
+while length(id_add) < 3
+    id_add = strcat('0', id_add);
+end
+set(handles.listbox1, 'string', sort([id_yet; id_add]));
+mkdir(strcat('gait_data/', id_add));
 
 function pushbutton2_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in pushbutton5.
 function pushbutton5_Callback(hObject, eventdata, handles)
+% 复位按钮
+global collect_con Flag_collect
+collect_con = [];
 
 % --- Executes on button press in pushbutton4.
 function pushbutton4_Callback(hObject, eventdata, handles)
+% 识别按钮
+global t container_csi
+n = 100;
+coss = [];
+while n
+    n = n-1
+    coss=[coss;container_csi]
+end
+
+plot(handles.axes3,coss);
+
+
 
 % --- Executes on mouse press over axes background.
 function axes2_ButtonDownFcn(hObject, eventdata, handles)
@@ -204,7 +230,11 @@ function axes2_ButtonDownFcn(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function axes2_CreateFcn(hObject, eventdata, handles)
-
+% 代码注释 --到yc机器开启
+%global vid vid_res n_bands;
+%[vid, vid_res, n_bands] = open_camera();
+%hImage = image(zeros(vid_res(2),vid_res(1),n_bands));
+%preview(vid, hImage); 
 
 % --- Executes during object creation, after setting all properties.
 function axes1_CreateFcn(hObject, eventdata, handles)

@@ -170,7 +170,7 @@ while Flag_1
             if Flag_collect & num_collect
                 % disp(size(container_csi))
                 coss = [coss;container_csi];
-                num_collect = num_collect - 1;
+                num_collect = num_collect-1;
             end
         end
         
@@ -213,8 +213,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % --- Executes on button press in pushbutton5.
 function pushbutton5_Callback(hObject, eventdata, handles)
 % ¸´Î»°´Å¥
-global collect_con coss
-coss = [];
+global collect_con 
 collect_con = [];
 
 % --- Executes on button press in pushbutton4.

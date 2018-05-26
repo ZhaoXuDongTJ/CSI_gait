@@ -1,0 +1,27 @@
+csi_trace = read_bf_file('data/test/walk_1.dat')
+%csi_entry = csi_trace{1}
+%csi = get_scaled_csi(csi_entry)
+
+%shi = db(abs(squeeze(csi).'))
+
+
+m = size(csi_trace, 1);  % 得出一个dat文件的包的数量
+dataSet = zeros(m, 3) ;  % 创建 一个可以容纳 包数量的矩阵                问题：一个包一行？
+
+for k=1:m
+    t = get_scaled_csi(csi_trace{k}) ;                              
+    t = db(abs(squeeze(t).')) ;
+    dataSet(k,:) = mean(t) ;  %  解决上述问题：  对30个数据取了平均值
+end
+
+    
+    
+    
+    
+% plot(shi)
+% legend('RX Antenna A', 'RX Antenna B', 'RX Antenna C', 'Location', 'SouthEast' )
+% xlabel('Subcarrier index')
+% ylabel('SNR [dB]')
+ 
+% SNR = db(get_eff_SNRs(csi), 'pow')
+ 

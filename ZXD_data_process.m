@@ -25,31 +25,31 @@ figure(1)
 plot(coss(:,1),'r');
 plot(coss(:,2),'g');
 plot(coss(:,3),'b');
-coss = time_flitering(coss);
 xlabel('time(s)');
 ylabel('CSI(db)');
-title('the CSI curve changes with time') ;
+title('CSI原始信号') ;
 legend('MIMO1', 'MIMO2', 'MIMO3') ;
 hold off ;
 hold on ;
 figure(2)
-disp(size(coss));
+coss = time_flitering(coss);
 plot(coss(:,1),'r');
 plot(coss(:,2),'g');
 plot(coss(:,3),'b');
 xlabel('time(s)');
 ylabel('CSI(db)');
-title('the CSI curve changes with time') ;
+title('过滤后波形') ;
 legend('MIMO1', 'MIMO2', 'MIMO3') ;
 hold off ;
 
 cossc = coss == -Inf;
 coss(cossc) = 0;
- [coeff,score,latent] = pca(coss);
+[coeff,score,latent] = pca(coss);
  
  hold on ;
 figure(3)
 plot(score)
+title('PAC') ;
 hold off ;
  
 % plot(shi)

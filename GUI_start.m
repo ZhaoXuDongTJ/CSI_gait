@@ -280,3 +280,11 @@ function figure1_CreateFcn(hObject, eventdata, handles)
 function figure1_DeleteFcn(hObject, eventdata, handles)
     global Flag_1
     Flag_1 = 0;
+
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+open('recognition.fig');
